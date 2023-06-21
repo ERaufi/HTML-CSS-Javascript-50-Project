@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CSS Flip Card</title>
+    <style>
+      .flip-card {
+        width: 200px; /* Sets the width of the flip card container */
+        height: 260px; /* Sets the height of the flip card container */
+      }
+
+      .flip-card-inner {
+        width: 100%; /* Sets the width of the flip card inner container */
+        height: 100%; /* Sets the height of the flip card inner container */
+        transition: transform 0.6s; /* Adds a smooth transition effect to the transform property with a duration of 0.6 seconds */
+        transform-style: preserve-3d; /* Specifies that child elements preserve their 3D position in the flip animation */
+      }
+
+      .flip-card:hover .flip-card-inner {
+        transform: rotateY(
+          180deg
+        ); /* Rotates the flip card inner container around the Y-axis by 180 degrees when hovering over the flip card container */
+      }
+
+      .flip-card-front,
+      .flip-card-back {
+        position: absolute; /* Positions the front and back of the flip card absolutely within the flip card inner container */
+        width: 100%; /* Sets the width of the front and back of the flip card */
+        height: 100%; /* Sets the height of the front and back of the flip card */
+        backface-visibility: hidden; /* Hides the back face of the flip card */
+        display: flex; /* Displays the front and back of the flip card as flex containers */
+        align-items: center; /* Centers the content vertically within the front and back of the flip card */
+        justify-content: center; /* Centers the content horizontally within the front and back of the flip card */
+        font-size: 24px; /* Sets the font size for the content within the front and back of the flip card */
+        font-weight: bold; /* Sets the font weight for the content within the front and back of the flip card */
+      }
+
+      .flip-card-front {
+        background-color: #eaeaea; /* Sets the background color of the front of the flip card */
+        color: #333; /* Sets the text color of the front of the flip card */
+      }
+
+      .flip-card-back {
+        background-color: #333; /* Sets the background color of the back of the flip card */
+        color: #fff; /* Sets the text color of the back of the flip card */
+        transform: rotateY(
+          180deg
+        ); /* Rotates the back of the flip card around the Y-axis by 180 degrees, initially hiding it from view */
+      }
+    </style>
+  </head>
+  <body>
+    <h1>CSS Flip Card</h1>
+    <div class="flip-card">
+      <div class="flip-card-inner">
+        <div class="flip-card-front">Front</div>
+        <div class="flip-card-back">Back</div>
+      </div>
+    </div>
+  </body>
+</html>

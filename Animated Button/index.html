@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Animated Button</title>
+    <style>
+      .button {
+        display: inline-block; /* Sets the element to be displayed as an inline block */
+        padding: 12px 24px; /* Defines the padding for the element */
+        font-size: 16px; /* Sets the font size for the text within the element */
+        font-weight: bold; /* Sets the font weight to bold for the text within the element */
+        text-align: center; /* Centers the text horizontally within the element */
+        text-decoration: none; /* Removes any text decoration, such as underlines */
+        background-color: #4caf50; /* Sets the background color of the element to #4caf50 (a shade of green) */
+        color: #ffffff; /* Sets the text color to white (#ffffff) */
+        border-radius: 4px; /* Sets the border radius of the element to create rounded corners */
+        transition: transform 0.3s ease; /* Adds a transition effect to the transform property with a duration of 0.3s and an ease timing function */
+      }
+
+      .button:hover {
+        animation: bounce 0.5s infinite alternate; /* Applies an animation called 'bounce' to the element when hovered over, with a duration of 0.5s, repeating infinitely, and alternating between the initial and end states */
+      }
+
+      @keyframes bounce {
+        0% {
+          transform: translateY(
+            0
+          ); /* Sets the initial state of the animation, where the element has no vertical translation (0%) */
+        }
+        50% {
+          transform: translateY(
+            -10px
+          ); /* Sets the state of the animation at 50%, where the element is translated 10 pixels upwards */
+        }
+        100% {
+          transform: translateY(
+            0
+          ); /* Sets the final state of the animation, returning the element to its original position (100%) */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a href="#" class="button">Click Me</a>
+  </body>
+</html>
