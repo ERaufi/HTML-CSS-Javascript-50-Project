@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mouse Trail</title>
+    <style>
+      body {
+        height: 100vh;
+        overflow: hidden;
+        /* cursor: none; */
+      }
+
+      .trail {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        /* background-color: #00ff00; */
+        mix-blend-mode: overlay;
+        pointer-events: none;
+        animation: trailAnimation 3s;
+      }
+
+      @keyframes trailAnimation {
+        0% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        100% {
+          opacity: 0;
+          transform: scale(3);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      var colors = [
+        "#FF0000",
+        "#00FF00",
+        "#0000FF",
+        "#FFFF00",
+        "#FF00FF",
+        "#00FFFF",
+      ];
+
+      document.addEventListener("mousemove", function (e) {
+        const trail = document.createElement("div");
+        trail.classList.add("trail");
+        trail.style.left = e.pageX + "px";
+        trail.style.top = e.pageY + "px";
+
+        var randomIndex = Math.floor(Math.random() * colors.length);
+        trail.style.backgroundColor = colors[randomIndex];
+
+        document.body.appendChild(trail);
+
+        setTimeout(() => {
+          document.body.removeChild(trail);
+        }, 3000);
+      });
+    </script>
+  </body>
+</html>
