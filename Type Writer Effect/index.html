@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      body {
+        background-color: #222;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .typewriter {
+        font-size: 24px;
+        color: #fff;
+        width: 450px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #333;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
+
+      p {
+        margin: 0;
+        line-height: 1.5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="typewriter" id="typewriter">
+      <h1>Welcome to the Typewriter Effect</h1>
+      <p id="text"></p>
+    </div>
+  </body>
+  <script>
+    const textElement = document.getElementById("text");
+    const text = "This is a typewriter effect.";
+
+    let index = 0;
+
+    function typeWriter() {
+      if (index == text.length) {
+        textElement.textContent = "";
+        index = 0;
+      }
+
+      if (index < text.length) {
+        textElement.textContent += text.charAt(index);
+        index++;
+
+        setTimeout(() => {
+          typeWriter();
+        }, 100);
+      }
+    }
+
+    typeWriter();
+  </script>
+</html>

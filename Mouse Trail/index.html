@@ -4,9 +4,7 @@
     <title>Mouse Trail</title>
     <style>
       body {
-        height: 100vh;
         overflow: hidden;
-        /* cursor: none; */
       }
 
       .trail {
@@ -14,10 +12,7 @@
         width: 20px;
         height: 20px;
         border-radius: 50%;
-        /* background-color: #00ff00; */
-        mix-blend-mode: overlay;
-        pointer-events: none;
-        animation: trailAnimation 3s;
+        animation: trailAnimation 1s;
       }
 
       @keyframes trailAnimation {
@@ -32,32 +27,31 @@
       }
     </style>
   </head>
-  <body>
-    <script>
-      var colors = [
-        "#FF0000",
-        "#00FF00",
-        "#0000FF",
-        "#FFFF00",
-        "#FF00FF",
-        "#00FFFF",
-      ];
+  <body></body>
+  <script>
+    var colors = [
+      "#FF0000",
+      "#00FF00",
+      "#0000FF",
+      "#FFFF00",
+      "#FF00FF",
+      "#00FFFF",
+    ];
 
-      document.addEventListener("mousemove", function (e) {
-        const trail = document.createElement("div");
-        trail.classList.add("trail");
-        trail.style.left = e.pageX + "px";
-        trail.style.top = e.pageY + "px";
+    document.addEventListener("mousemove", function (e) {
+      const trail = document.createElement("div");
+      trail.classList.add("trail");
+      trail.style.left = e.pageX + "px";
+      trail.style.top = e.pageY + "px";
 
-        var randomIndex = Math.floor(Math.random() * colors.length);
-        trail.style.backgroundColor = colors[randomIndex];
+      var randomIndex = Math.floor(Math.random() * colors.length);
+      trail.style.backgroundColor = colors[randomIndex];
 
-        document.body.appendChild(trail);
+      document.body.appendChild(trail);
 
-        setTimeout(() => {
-          document.body.removeChild(trail);
-        }, 3000);
-      });
-    </script>
-  </body>
+      setTimeout(() => {
+        document.body.removeChild(trail);
+      }, 500);
+    });
+  </script>
 </html>
