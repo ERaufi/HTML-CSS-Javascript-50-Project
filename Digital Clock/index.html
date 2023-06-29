@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      body {
+        background-color: black;
+      }
+
+      .clock {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        color: #17d4fe;
+        font-size: 60px;
+        font-family: "Orbitron", sans-serif;
+        letter-spacing: 7px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="clock">
+      <h1 id="time"></h1>
+      <p id="date"></p>
+    </div>
+  </body>
+  <script>
+    function updateTime() {
+      const clock = new Date();
+      const formatNumber = (number) => String(number).padStart(2, "0");
+
+      let hour = clock.getHours();
+      let amPm = hour >= 12 ? "PM" : "AM";
+      hour = hour % 12 || 12;
+
+      const time = `${formatNumber(hour)}:${formatNumber(
+        clock.getMinutes()
+      )}:${formatNumber(clock.getSeconds())} ${amPm}`;
+
+      document.getElementById("time").innerText = time;
+
+      const date = `${formatNumber(clock.getDate())}/${formatNumber(
+        clock.getMonth() + 1
+      )}/${clock.getFullYear()}`;
+
+      document.getElementById("date").innerText = date;
+    }
+
+    setInterval(updateTime, 1000);
+  </script>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .clock {
+        position: relative;
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        border: 2px solid black;
+      }
+
+      .hour-hand,
+      .minute-hand,
+      .second-hand {
+        position: absolute;
+        background-color: black;
+        transform-origin: bottom center;
+        transition: transform 0.5s ease-in-out;
+      }
+
+      .hour-hand {
+        width: 6px;
+        height: 70px;
+        top: 50%;
+        left: 50%;
+        margin-left: -3px;
+        margin-top: -70px;
+        border-radius: 6px 6px 0 0;
+      }
+
+      .minute-hand {
+        width: 4px;
+        height: 90px;
+        top: 50%;
+        left: 50%;
+        margin-left: -2px;
+        margin-top: -90px;
+        border-radius: 4px 4px 0 0;
+      }
+
+      .second-hand {
+        width: 2px;
+        height: 100px;
+        top: 50%;
+        left: 50%;
+        margin-left: -1px;
+        margin-top: -100px;
+        border-radius: 2px 2px 0 0;
+        background-color: red;
+      }
+
+      .number {
+        position: absolute;
+        color: black;
+        font-size: 12px;
+        font-weight: bold;
+      }
+
+      .number-3 {
+        top: 95px;
+        left: 180px;
+      }
+
+      .number-6 {
+        top: 190px;
+        left: 50%;
+      }
+
+      .number-9 {
+        top: 95px;
+        left: 5px;
+      }
+
+      .number-12 {
+        top: 10px;
+        left: 105px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="clock">
+      <div class="hour-hand"></div>
+      <div class="minute-hand"></div>
+      <div class="second-hand"></div>
+
+      <div class="number number-3">3</div>
+      <div class="number number-6">6</div>
+      <div class="number number-9">9</div>
+      <div class="number number-12">12</div>
+    </div>
+  </body>
+
+  <script>
+    function rotateClockHands() {
+      const now = new Date();
+      const seconds = now.getSeconds();
+      const minutes = now.getMinutes();
+      const hours = now.getHours();
+
+      const secondHand = document.querySelector(".second-hand");
+      const minuteHand = document.querySelector(".minute-hand");
+      const hourHand = document.querySelector(".hour-hand");
+
+      const secondHandDegree = (seconds / 60) * 360;
+      const minuteHandDegree = (minutes / 60) * 360 + (seconds / 60) * 6;
+      const hourHandDegree = ((hours % 12) / 12) * 360 + (minutes / 60) * 30;
+
+      secondHand.style.transform = `rotate(${secondHandDegree}deg)`;
+      minuteHand.style.transform = `rotate(${minuteHandDegree}deg)`;
+      hourHand.style.transform = `rotate(${hourHandDegree}deg)`;
+    }
+
+    setInterval(rotateClockHands, 1000);
+  </script>
+</html>
