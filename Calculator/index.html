@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Calculator</title>
+
+    <style>
+      .calculator {
+        width: 270px;
+        margin: 0 auto;
+        background-color: #f7f7f7;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      #result {
+        width: 90%;
+        margin-bottom: 10px;
+        padding: 10px;
+        font-size: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        text-align: right;
+      }
+
+      .btn {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+        margin: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        cursor: pointer;
+        background-color: #f9f9f9;
+      }
+
+      .btn:hover {
+        background-color: #e6e6e6;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="calculator">
+      <h1>Calculator</h1>
+      <input type="text" id="result" disabled />
+
+      <div>
+        <button class="btn" onclick="append('7')">7</button>
+        <button class="btn" onclick="append('8')">8</button>
+        <button class="btn" onclick="append('9')">9</button>
+        <button class="btn" onclick="append('+')">+</button>
+      </div>
+
+      <div>
+        <button class="btn" onclick="append('4')">4</button>
+        <button class="btn" onclick="append('5')">5</button>
+        <button class="btn" onclick="append('6')">6</button>
+        <button class="btn" onclick="append('-')">-</button>
+      </div>
+
+      <div>
+        <button class="btn" onclick="append('1')">1</button>
+        <button class="btn" onclick="append('2')">2</button>
+        <button class="btn" onclick="append('3')">3</button>
+        <button class="btn" onclick="append('*')">*</button>
+      </div>
+
+      <div>
+        <button class="btn" onclick="append('0')">0</button>
+        <button class="btn" onclick="calculate()">=</button>
+        <button class="btn" onclick="clearResult()">C</button>
+        <button class="btn" onclick="append('/')">/</button>
+      </div>
+    </div>
+  </body>
+
+  <script>
+    const resultInput = document.getElementById("result");
+    let currentExpression = "";
+
+    function append(value) {
+      currentExpression += value;
+      resultInput.value = currentExpression;
+    }
+    function calculate() {
+      try {
+        const result = eval(currentExpression);
+        resultInput.value = result;
+        currentExpression = "";
+      } catch (error) {
+        resultInput.value = "Error";
+      }
+    }
+    function clearResult() {
+      currentExpression = "";
+      resultInput.value = "";
+    }
+  </script>
+</html>
