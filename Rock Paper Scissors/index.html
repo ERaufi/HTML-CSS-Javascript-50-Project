@@ -52,21 +52,29 @@
     <div id="result"></div>
 
     <script>
-      // Function to play the game
+      // Function to play the game and determine the winner
       function playGame(userChoice) {
         const choices = ["rock", "paper", "scissors"];
 
         // Generate a random computer choice
         const computerChoice = choices[Math.floor(Math.random() * 3)];
 
-        // Get the result element
-        const resultElement = document.getElementById("result");
+        let resultText = "It's a tie!";
+
+        if (
+          (userChoice === "rock" && computerChoice === "scissors") ||
+          (userChoice === "paper" && computerChoice === "rock") ||
+          (userChoice === "scissors" && computerChoice === "paper")
+        ) {
+          // User wins if their choice beats the computer's choice
+          resultText = "You win!";
+        } else if (userChoice !== computerChoice) {
+          // Computer wins if the choices are different
+          resultText = "Computer wins!";
+        }
 
         // Display the result
-        resultElement.innerHTML = `<p>${determineWinner(
-          userChoice,
-          computerChoice
-        )}</p>`;
+        document.getElementById("result").innerHTML = `<p>${resultText}</p>`;
 
         // Set the user and computer choice images
         document.getElementById(
@@ -75,24 +83,6 @@
         document.getElementById(
           "computer-choice"
         ).src = `../assets/images/${computerChoice}.jpg`;
-      }
-
-      // Function to determine the winner
-      function determineWinner(userChoice, computerChoice) {
-        if (userChoice === computerChoice) {
-          // It's a tie if user and computer choices are the same
-          return "It's a tie!";
-        } else if (
-          (userChoice === "rock" && computerChoice === "scissors") ||
-          (userChoice === "paper" && computerChoice === "rock") ||
-          (userChoice === "scissors" && computerChoice === "paper")
-        ) {
-          // User wins if their choice beats the computer's choice
-          return "You win!";
-        } else {
-          // Computer wins in all other cases
-          return "Computer wins!";
-        }
       }
     </script>
   </body>
