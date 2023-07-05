@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Rock Paper Scissors</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+      }
+
+      h1 {
+        color: #333;
+      }
+
+      .game {
+        display: flex;
+        justify-content: center;
+        margin-top: 30px;
+      }
+
+      .game img {
+        width: 200px;
+        height: 200px;
+        margin: 10px;
+      }
+
+      .choices {
+        margin-top: 20px;
+      }
+
+      .choices button {
+        font-size: 18px;
+        padding: 10px 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Rock Paper Scissors</h1>
+    <div class="game">
+      <img id="user-choice" src="../assets/images/user.jpg" alt="Your choice" />
+      <img
+        id="computer-choice"
+        src="../assets/images/pc.jpg"
+        alt="Computer's choice"
+      />
+    </div>
+    <div class="choices">
+      <button onclick="playGame('rock')">Rock</button>
+      <button onclick="playGame('paper')">Paper</button>
+      <button onclick="playGame('scissors')">Scissors</button>
+    </div>
+    <div id="result"></div>
+
+    <script>
+      // Function to play the game
+      function playGame(userChoice) {
+        const choices = ["rock", "paper", "scissors"];
+
+        // Generate a random computer choice
+        const computerChoice = choices[Math.floor(Math.random() * 3)];
+
+        // Get the result element
+        const resultElement = document.getElementById("result");
+
+        // Display the result
+        resultElement.innerHTML = `<p>${determineWinner(
+          userChoice,
+          computerChoice
+        )}</p>`;
+
+        // Set the user and computer choice images
+        document.getElementById(
+          "user-choice"
+        ).src = `../assets/images/${userChoice}.jpg`;
+        document.getElementById(
+          "computer-choice"
+        ).src = `../assets/images/${computerChoice}.jpg`;
+      }
+
+      // Function to determine the winner
+      function determineWinner(userChoice, computerChoice) {
+        if (userChoice === computerChoice) {
+          // It's a tie if user and computer choices are the same
+          return "It's a tie!";
+        } else if (
+          (userChoice === "rock" && computerChoice === "scissors") ||
+          (userChoice === "paper" && computerChoice === "rock") ||
+          (userChoice === "scissors" && computerChoice === "paper")
+        ) {
+          // User wins if their choice beats the computer's choice
+          return "You win!";
+        } else {
+          // Computer wins in all other cases
+          return "Computer wins!";
+        }
+      }
+    </script>
+  </body>
+</html>
