@@ -26,13 +26,13 @@
         font-size: 60px;
         cursor: pointer;
         transition: transform 0.3s;
-        transform-style: preserve-3d;
         position: relative;
       }
       .board td:hover {
         background-color: #f4f4f4;
       }
-      .board td::before {
+      .board td.X::before,
+      .board td.O::before {
         position: absolute;
         top: 50%;
         left: 50%;
@@ -42,20 +42,16 @@
         opacity: 0;
         transition: opacity 0.3s;
       }
+      .board td.X::before {
+        content: "X";
+      }
+      .board td.O::before {
+        content: "O";
+      }
       .message {
         margin-top: 20px;
         font-size: 24px;
         color: #fff;
-      }
-      .reset-button {
-        margin-top: 20px;
-        padding: 10px 20px;
-        font-size: 18px;
-        background-color: #fff;
-        color: #333;
-        border: none;
-        cursor: pointer;
-        display: none;
       }
     </style>
   </head>
@@ -93,6 +89,11 @@
         const cell = document.getElementsByTagName("td")[index];
         cell.classList.add(currentPlayer);
         cell.textContent = currentPlayer;
+
+        cell.style.transform = "rotateY(180deg)";
+        setTimeout(() => {
+          cell.style.transform = "rotateY(0deg)";
+        }, 300);
 
         checkWin();
         switchPlayer();
