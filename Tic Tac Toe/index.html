@@ -32,8 +32,7 @@
       .board td:hover {
         background-color: #f4f4f4;
       }
-      .board td.X::before,
-      .board td.O::before {
+      .board td::before {
         position: absolute;
         top: 50%;
         left: 50%;
@@ -42,12 +41,6 @@
         color: #fff;
         opacity: 0;
         transition: opacity 0.3s;
-      }
-      .board td.X::before {
-        content: "X";
-      }
-      .board td.O::before {
-        content: "O";
       }
       .message {
         margin-top: 20px;
@@ -68,182 +61,124 @@
   </head>
   <body>
     <h1>Tic Tac Toe</h1>
-
     <table class="board">
       <tr>
-        <td onclick="makeMove(0, 0)"></td>
-        <td onclick="makeMove(0, 1)"></td>
-        <td onclick="makeMove(0, 2)"></td>
+        <td onclick="makeMove(0)"></td>
+        <td onclick="makeMove(1)"></td>
+        <td onclick="makeMove(2)"></td>
       </tr>
       <tr>
-        <td onclick="makeMove(1, 0)"></td>
-        <td onclick="makeMove(1, 1)"></td>
-        <td onclick="makeMove(1, 2)"></td>
+        <td onclick="makeMove(3)"></td>
+        <td onclick="makeMove(4)"></td>
+        <td onclick="makeMove(5)"></td>
       </tr>
       <tr>
-        <td onclick="makeMove(2, 0)"></td>
-        <td onclick="makeMove(2, 1)"></td>
-        <td onclick="makeMove(2, 2)"></td>
+        <td onclick="makeMove(6)"></td>
+        <td onclick="makeMove(7)"></td>
+        <td onclick="makeMove(8)"></td>
       </tr>
     </table>
-
     <div class="message" id="message"></div>
-
     <button class="reset-button" onclick="resetGame()">Reset</button>
+  </body>
+  <script>
+    const board = ["", "", "", "", "", "", "", "", ""];
+    let currentPlayer = "X";
+    let gameOver = false;
+    let moves = 0;
 
-    <script>
-      let board = [
-        ["", "", ""],
-        ["", "", ""],
-        ["", "", ""],
+    function makeMove(index) {
+      if (board[index] === "" && !gameOver) {
+        board[index] = currentPlayer;
+        const cell = document.getElementsByTagName("td")[index];
+        cell.classList.add(currentPlayer);
+        cell.textContent = currentPlayer;
+
+        checkWin();
+        switchPlayer();
+        moves++;
+        checkDraw();
+
+        if (!gameOver && currentPlayer === "O") {
+          setTimeout(computerMove, 1000);
+        }
+      }
+    }
+
+    function checkWin() {
+      const winningConditions = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6],
       ];
-      let currentPlayer = "X";
-      let gameOver = false;
-      let moves = 0;
 
-      function makeMove(row, col) {
-        if (board[row][col] === "" && !gameOver) {
-          board[row][col] = currentPlayer;
-          document.getElementById("message").textContent = "";
+      for (const condition of winningConditions) {
+        const [a, b, c] = condition;
 
-          const cell = document.getElementsByTagName("td")[row * 3 + col];
-          cell.classList.add(currentPlayer);
-          cell.style.transform = "rotateY(180deg)";
-          cell.textContent = currentPlayer;
-
-          setTimeout(() => {
-            cell.style.transform = "rotateY(0deg)";
-            cell.children[0].style.opacity = 1;
-          }, 300);
-
-          checkWin();
-          switchPlayer();
-          moves++;
-          checkDraw();
-
-          if (!gameOver && currentPlayer === "O") {
-            computerMove();
-          }
-        }
-      }
-
-      function checkWin() {
-        const winningConditions = [
-          [
-            [0, 0],
-            [0, 1],
-            [0, 2],
-          ],
-          [
-            [1, 0],
-            [1, 1],
-            [1, 2],
-          ],
-          [
-            [2, 0],
-            [2, 1],
-            [2, 2],
-          ],
-          [
-            [0, 0],
-            [1, 0],
-            [2, 0],
-          ],
-          [
-            [0, 1],
-            [1, 1],
-            [2, 1],
-          ],
-          [
-            [0, 2],
-            [1, 2],
-            [2, 2],
-          ],
-          [
-            [0, 0],
-            [1, 1],
-            [2, 2],
-          ],
-          [
-            [0, 2],
-            [1, 1],
-            [2, 0],
-          ],
-        ];
-
-        for (let i = 0; i < winningConditions.length; i++) {
-          const [[a, b], [c, d], [e, f]] = winningConditions[i];
-          if (
-            board[a][b] !== "" &&
-            board[a][b] === board[c][d] &&
-            board[a][b] === board[e][f]
-          ) {
-            document.getElementById(
-              "message"
-            ).textContent = `Player ${board[a][b]} wins!`;
-            gameOver = true;
-            showResetButton();
-            break;
-          }
-        }
-      }
-
-      function switchPlayer() {
-        currentPlayer = currentPlayer === "X" ? "O" : "X";
-      }
-
-      function checkDraw() {
-        if (moves === 9 && !gameOver) {
-          document.getElementById("message").textContent = "It's a draw!";
+        if (board[a] !== "" && board[a] === board[b] && board[a] === board[c]) {
+          document.getElementById(
+            "message"
+          ).textContent = `Player ${board[a]} wins!`;
           gameOver = true;
           showResetButton();
+          break;
+        }
+      }
+    }
+
+    function switchPlayer() {
+      currentPlayer = currentPlayer === "X" ? "O" : "X";
+    }
+
+    function checkDraw() {
+      if (moves === 9 && !gameOver) {
+        document.getElementById("message").textContent = "It's a draw!";
+        gameOver = true;
+        showResetButton();
+      }
+    }
+
+    function computerMove() {
+      const emptyCells = [];
+      for (let i = 0; i < 9; i++) {
+        if (board[i] === "") {
+          emptyCells.push(i);
         }
       }
 
-      function computerMove() {
-        const emptyCells = [];
-        for (let i = 0; i < 3; i++) {
-          for (let j = 0; j < 3; j++) {
-            if (board[i][j] === "") {
-              emptyCells.push([i, j]);
-            }
-          }
-        }
+      const randomIndex = Math.floor(Math.random() * emptyCells.length);
+      const index = emptyCells[randomIndex];
 
-        const randomIndex = Math.floor(Math.random() * emptyCells.length);
-        const [row, col] = emptyCells[randomIndex];
+      makeMove(index);
+    }
 
-        setTimeout(() => {
-          makeMove(row, col);
-        }, 1000);
-      }
+    function resetGame() {
+      board.fill("");
+      currentPlayer = "X";
+      gameOver = false;
+      moves = 0;
+      document.getElementById("message").textContent = "";
+      const cells = document.querySelectorAll(".board td");
+      cells.forEach((cell) => {
+        cell.textContent = "";
+        cell.classList.remove("X", "O");
+      });
+      hideResetButton();
+    }
 
-      function resetGame() {
-        board = [
-          ["", "", ""],
-          ["", "", ""],
-          ["", "", ""],
-        ];
-        currentPlayer = "X";
-        gameOver = false;
-        moves = 0;
-        document.getElementById("message").textContent = "";
-        document.querySelectorAll(".board td").forEach((cell) => {
-          cell.textContent = "";
-          cell.classList.remove("X", "O");
-        });
-        hideResetButton();
-      }
+    function showResetButton() {
+      const resetButton = document.querySelector(".reset-button");
+      resetButton.style.display = "inline-block";
+    }
 
-      function showResetButton() {
-        const resetButton = document.querySelector(".reset-button");
-        resetButton.style.display = "inline-block";
-      }
-
-      function hideResetButton() {
-        const resetButton = document.querySelector(".reset-button");
-        resetButton.style.display = "none";
-      }
-    </script>
-  </body>
+    function hideResetButton() {
+      const resetButton = document.querySelector(".reset-button");
+      resetButton.style.display = "none";
+    }
+  </script>
 </html>
