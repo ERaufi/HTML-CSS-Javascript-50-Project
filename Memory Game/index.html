@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Memory Game</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f4f4f4;
+      }
+
+      .card {
+        position: relative;
+        width: 100px;
+        height: 100px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .card.flip .front {
+        transform: rotateY(180deg);
+        color: #fff;
+      }
+
+      .card.flip .back {
+        transform: rotateY(0deg);
+      }
+
+      .card .front,
+      .card .back {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        padding: 10px;
+        box-sizing: border-box;
+        font-size: 20px;
+        color: #333;
+        backface-visibility: hidden;
+        transition: transform 0.3s;
+      }
+
+      .card .back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        transform: rotateY(180deg);
+        color: #fff;
+        background-color: #333;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container" id="cardContainer"></div>
+
+    <script>
+      const cardContainer = document.getElementById("cardContainer");
+      let flippedCards = [];
+
+      const symbols = [
+        "🌻",
+        "🐶",
+        "🍕",
+        "🚀",
+        "🎈",
+        "🌺",
+        "🐱",
+        "🍔",
+        "🎉",
+        "🌈",
+      ];
+      const cards = [...symbols, ...symbols];
+
+      shuffleArray(cards);
+
+      // Create card elements
+      cards.forEach((symbol, index) => {
+        const card = document.createElement("div");
+        card.classList.add("card");
+        card.dataset.symbol = symbol;
+        card.innerHTML = `<div class="front"></div><div class="back">${symbol}</div>`;
+        card.addEventListener("click", flipCard);
+        cardContainer.appendChild(card);
+      });
+
+      function flipCard() {
+        if (!this.classList.contains("flip")) {
+          this.classList.add("flip");
+          flippedCards.push(this);
+
+          if (flippedCards.length === 2) {
+            setTimeout(checkMatch, 1000);
+          }
+        }
+      }
+
+      function checkMatch() {
+        const card1 = flippedCards[0];
+        const card2 = flippedCards[1];
+
+        if (card1.dataset.symbol === card2.dataset.symbol) {
+          card1.removeEventListener("click", flipCard);
+          card2.removeEventListener("click", flipCard);
+          flippedCards = [];
+        } else {
+          card1.classList.remove("flip");
+          card2.classList.remove("flip");
+          flippedCards = [];
+        }
+      }
+
+      function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+      }
+    </script>
+  </body>
+</html>
