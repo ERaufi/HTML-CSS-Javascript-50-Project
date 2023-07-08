@@ -9,7 +9,7 @@
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
-        background-color: #f7f7f7;
+        background-color: #f24141;
       }
 
       .container {
@@ -24,7 +24,7 @@
         position: relative;
         width: 100px;
         height: 100px;
-        background-color: #fff;
+        background-color: #3bbcd9;
         border-radius: 5px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         margin: 10px;
@@ -63,7 +63,7 @@
         left: 0;
         transform: rotateY(180deg);
         color: #fff;
-        background-color: #333;
+        background-color: #88e8f2;
         border-radius: 5px;
       }
 
@@ -88,7 +88,7 @@
         font-size: 32px;
         text-align: center;
         display: none;
-        z-index: 1000; /* Updated z-index value */
+        z-index: 1000;
         background-color: rgba(255, 255, 255, 0.9);
         padding: 20px;
         border-radius: 10px;
@@ -155,7 +155,6 @@
 
       shuffleArray(cards);
 
-      // Create card elements
       cards.forEach((symbol, index) => {
         const card = document.createElement("div");
         card.classList.add("card");
