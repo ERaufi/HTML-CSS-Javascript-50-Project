@@ -9,6 +9,7 @@
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
+        background-color: #f7f7f7;
       }
 
       .container {
@@ -17,7 +18,6 @@
         justify-content: center;
         align-items: center;
         height: 100vh;
-        background-color: #f4f4f4;
       }
 
       .card {
@@ -66,14 +66,78 @@
         background-color: #333;
         border-radius: 5px;
       }
+
+      .reset-button {
+        margin-top: 20px;
+        padding: 10px 20px;
+        font-size: 18px;
+        background-color: #333;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        display: none;
+        position: relative;
+        z-index: 1000;
+      }
+
+      .message {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 32px;
+        text-align: center;
+        display: none;
+        z-index: 1000; /* Updated z-index value */
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: none;
+        z-index: 998;
+      }
+
+      .reset-container {
+        position: fixed;
+        top: 70%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        display: none;
+        z-index: 1001;
+        text-align: center;
+      }
     </style>
   </head>
   <body>
     <div class="container" id="cardContainer"></div>
+    <div class="overlay" id="overlay"></div>
+    <div class="message" id="message"></div>
+    <div class="reset-container" id="resetContainer">
+      <div class="message" id="resetMessage">Resetting...</div>
+      <button class="reset-button" onclick="resetGame()">Reset Game</button>
+    </div>
 
     <script>
       const cardContainer = document.getElementById("cardContainer");
+      const messageElement = document.getElementById("message");
+      const resetButton = document.querySelector(".reset-button");
+      const resetContainer = document.getElementById("resetContainer");
+      const overlay = document.getElementById("overlay");
       let flippedCards = [];
+      let matchedCards = 0;
+      let gameLocked = false;
 
       const symbols = [
         "🌻",
@@ -102,13 +166,14 @@
       });
 
       function flipCard() {
-        if (!this.classList.contains("flip")) {
-          this.classList.add("flip");
-          flippedCards.push(this);
+        if (gameLocked || this.classList.contains("flip")) return;
 
-          if (flippedCards.length === 2) {
-            setTimeout(checkMatch, 1000);
-          }
+        this.classList.add("flip");
+        flippedCards.push(this);
+
+        if (flippedCards.length === 2) {
+          gameLocked = true;
+          setTimeout(checkMatch, 1000);
         }
       }
 
@@ -120,10 +185,17 @@
           card1.removeEventListener("click", flipCard);
           card2.removeEventListener("click", flipCard);
           flippedCards = [];
+          matchedCards += 2;
+          gameLocked = false;
+
+          if (matchedCards === cards.length) {
+            showEndGameMessage();
+          }
         } else {
           card1.classList.remove("flip");
           card2.classList.remove("flip");
           flippedCards = [];
+          gameLocked = false;
         }
       }
 
@@ -132,6 +204,37 @@
           const j = Math.floor(Math.random() * (i + 1));
           [array[i], array[j]] = [array[j], array[i]];
         }
+      }
+
+      function resetGame() {
+        cardContainer.innerHTML = "";
+        matchedCards = 0;
+        gameLocked = false;
+        flippedCards = [];
+        messageElement.textContent = "";
+        resetButton.style.display = "none";
+        overlay.style.display = "none";
+        resetContainer.style.display = "none";
+        shuffleArray(cards);
+
+        cards.forEach((symbol, index) => {
+          const card = document.createElement("div");
+          card.classList.add("card");
+          card.dataset.symbol = symbol;
+          card.innerHTML = `<div class="front"></div><div class="back">${symbol}</div>`;
+          card.addEventListener("click", flipCard);
+          cardContainer.appendChild(card);
+        });
+
+        messageElement.style.display = "none";
+      }
+
+      function showEndGameMessage() {
+        messageElement.textContent = "Congratulations! You won!";
+        resetButton.style.display = "block";
+        overlay.style.display = "block";
+        resetContainer.style.display = "block";
+        messageElement.style.display = "block";
       }
     </script>
   </body>
