@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        background-image: url(../assets/images/newyork.jpg);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      .merge {
+        background-color: #7ff594;
+        border: 0;
+        border-radius: 3px;
+        box-shadow: 0 3px rgba(138, 244, 170, 0.5);
+        color: #fff;
+        cursor: pointer;
+        font-size: 16px;
+        font-family: "Poppins", sans-serif;
+        padding: 12px 20px;
+        position: fixed;
+        letter-spacing: 1px;
+        top: 20px;
+        z-index: 100;
+      }
+
+      .merge:active {
+        transform: translateY(2px);
+        box-shadow: none;
+      }
+
+      .merge:focus {
+        outline: none;
+      }
+
+      .boxes {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: space-around;
+        justify-content: space-around;
+        position: relative;
+        transition: 0.4s ease;
+        height: 500px;
+        width: 500px;
+      }
+
+      .boxes.big {
+        height: 600px;
+        width: 600px;
+      }
+
+      .box {
+        background-image: url(../assets/images/deadpool.jpg);
+        background-repeat: no-repeat;
+        background-size: 500px 500px;
+        position: relative;
+        transition: 0.4s ease;
+        width: 125px;
+        height: 125px;
+      }
+
+      .boxes.big .box {
+        transform: rotateZ(360deg);
+      }
+
+      .box::after {
+        background-color: #eae8df;
+        content: "";
+        position: absolute;
+        top: 8px;
+        right: -15px;
+        height: 100%;
+        width: 15px;
+        transform: skewY(45deg);
+      }
+
+      .box::before {
+        background-color: #0e0e0d;
+        content: "";
+        position: absolute;
+        bottom: -15px;
+        left: 8px;
+        height: 15px;
+        width: 100%;
+        transform: skewX(45deg);
+      }
+
+      img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="btn" class="merge">Merge</button>
+    <div id="boxes" class="boxes big"></div>
+  </body>
+  <script>
+    const boxesContainer = document.getElementById("boxes");
+
+    const btn = document.getElementById("btn");
+
+    btn.addEventListener("click", () => {
+      boxesContainer.classList.toggle("big");
+    });
+
+    function createBoxes() {
+      for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < 4; j++) {
+          const box = document.createElement("div");
+          box.classList.add("box");
+          box.style.backgroundPosition = `${-j * 125}px ${-i * 125}px`;
+          boxesContainer.appendChild(box);
+        }
+      }
+    }
+
+    createBoxes();
+  </script>
+</html>

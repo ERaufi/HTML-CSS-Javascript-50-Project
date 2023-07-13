@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Preview</title>
+    <style>
+      #previewContainer {
+        position: relative;
+        display: inline-block;
+      }
+
+      #previewImage {
+        max-width: 300px;
+        max-height: 300px;
+        transition: transform 0.3s ease;
+      }
+
+      #previewContainer:hover #previewImage {
+        transform: scale(1.2);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="previewContainer">
+      <input type="file" id="imageInput" accept="image/*" />
+      <img
+        id="previewImage"
+        src="#"
+        alt="Preview Image"
+        style="display: none"
+      />
+    </div>
+
+    <script>
+      // Function to handle the file input change event
+      function handleImagePreview(event) {
+        var file = event.target.files[0];
+        var previewImage = document.getElementById("previewImage");
+
+        if (file) {
+          // Create a FileReader object
+          var reader = new FileReader();
+
+          // Set the image source once it's loaded
+          reader.onload = function () {
+            previewImage.src = reader.result;
+            previewImage.style.display = "block";
+          };
+
+          // Read the image file as a URL
+          reader.readAsDataURL(file);
+        } else {
+          previewImage.src = "#";
+          previewImage.style.display = "none";
+        }
+      }
+
+      // Get the image input element
+      var imageInput = document.getElementById("imageInput");
+
+      // Add event listener for the file input change event
+      imageInput.addEventListener("change", handleImagePreview);
+    </script>
+  </body>
+</html>
