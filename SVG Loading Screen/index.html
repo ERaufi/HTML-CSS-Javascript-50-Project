@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      /* Global CSS reset */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      /* Styling for the loading screen container */
+      #loading-screen {
+        height: 100vh; /* Set the container height to 100% of the viewport height */
+        width: 100vw; /* Set the container width to 100% of the viewport width */
+        display: grid; /* Use CSS grid to arrange elements */
+        place-items: center; /* Center the grid items both vertically and horizontally */
+        position: fixed; /* Fix the container's position on the viewport */
+        background-color: #5c73ff; /* Set the background color of the container */
+      }
+
+      /* Styling for the animation container */
+      #animation-container {
+        display: grid; /* Use CSS grid to arrange elements */
+        place-items: center; /* Center the grid items both vertically and horizontally */
+        gap: 20px; /* Set a gap of 20px between grid items */
+      }
+
+      /* Styling for the loading text animation */
+      #loading-text {
+        stroke-dasharray: 1130.0596923828125; /* Set the dash pattern for the SVG stroke */
+        stroke-dashoffset: 1130.0596923828125; /* Set the offset of the dash pattern for the SVG stroke */
+        animation: drawTurtle 2.5s infinite alternate ease-in-out; /* Apply the 'drawTurtle' animation to the element */
+        stroke: #85b4ff; /* Set the color of the SVG stroke */
+        stroke-width: 5; /* Set the width of the SVG stroke */
+      }
+
+      /* Styling for the turtle's outer body animation */
+      #turtle-outer-body {
+        stroke-dasharray: 1109.7108154296875; /* Set the dash pattern for the SVG stroke */
+        stroke-dashoffset: 1109.7108154296875; /* Set the offset of the dash pattern for the SVG stroke */
+        animation: drawTurtle 5s linear infinite alternate; /* Apply the 'drawTurtle' animation to the element */
+        stroke-width: 5; /* Set the width of the SVG stroke */
+        stroke: #85b4ff; /* Set the color of the SVG stroke */
+      }
+
+      /* Keyframes animation for drawing the turtle's shapes */
+      @keyframes drawTurtle {
+        to {
+          stroke-dashoffset: 0; /* Animate the offset of the dash pattern to 0, completing the drawing effect */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="loading-screen">
+      <div id="animation-container">
+        <svg
+          width="266"
+          height="211"
+          viewBox="0 0 266 211"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            id="turtle-outer-body"
+            d="M76 80C81.0292 79.3063 91.4998 78 91.4998 78C91.4998 78 80.8885 102.961 80.5 120.5C80.1214 137.592 89.5 164 89.5 164C89.5 164 74 176 50.4998 183C48 183.745 44.4616 189.282 45 195C45.4183 199.442 46.5274 201.97 50.4998 204C55.1813 206.393 57.7708 204.954 63 205.5C67.1698 205.935 67.4327 208.517 71.5 207.5C77.5 206 98 180 98 180L105 188.5L117 197L121.5 207.5L125 197C125 197 133.74 195.523 139 193.5C146.439 190.639 156.5 180 156.5 180C156.5 180 170.674 200.339 183.5 202.5C188.314 203.311 191.222 203.501 196 202.5C203.017 201.03 204.945 200.498 206.5 193.5C208.5 184.5 200.574 177.544 189.5 174C177 170 169 166.5 169 166.5C169 166.5 181.712 141.265 183.5 124.5C184.991 110.52 179 88.5 179 88.5C179 88.5 184.055 87.382 188 88.5C196.868 91.0129 191.5 98 204 108.5C218.351 120.554 220 123 235 134C242.65 139.61 257 136 261 134C267.909 130.545 262.856 122.379 258.5 116C244.5 95.5 231 85.5 208.5 72C201.775 67.9652 197.34 65.677 189.5 65.5C181.104 65.3104 169 72 169 72L160 62.5C160 62.5 162 43.5 160 29.5C157.852 14.4623 143.5 1.5 135 1.5C126.5 1.5 124.9 6.47232 120 14.5C111.251 28.8332 117 58.5 117 58.5L111 65.5C111 65.5 94.6487 51.575 81.9998 51C49 49.5 16.5001 73.5 5.5 84C-5.50013 94.5 10.3451 92.1751 18.4998 93C37 94.8713 32.5002 86 76 80Z"
+            stroke="black"
+            stroke-width="2"
+          />
+        </svg>
+        <svg
+          width="271"
+          height="89"
+          viewBox="0 0 271 100"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            id="loading-text"
+            d="M1 62L41 39C41 39 59.6085 27.704 68 17C71.308 12.7804 73.1354 10.3122 75.5 5.50001C83.7038 -11.1955 38.5 35.5 38.5 35.5C38.5 35.5 21.7731 48.0182 26.5 56C28.4113 59.2274 30.3985 60.952 34 62C41.176 64.0883 49.0601 58.9144 50 51.5M50 51.5C50.8683 44.6504 56.34 39.9943 62.5 35.5C67.4001 31.9249 72.1292 28.9746 78 30.5C81.0996 31.3054 84.5 35.5 84.5 35.5M50 51.5C48.9855 55 50.2041 56.0434 52 58C55.4734 61.7841 60.2953 58.0615 65 56C69.8322 53.8827 75.5 47.5 75.5 47.5L84.5 35.5M84.5 35.5C84.5 35.5 76.3788 36.0362 72.5 39C68.668 41.9281 63.3836 45.4488 66 49.5C68.0569 52.6848 75.5 51.5 75.5 51.5L85.7744 44.6504M116.5 35.5C113.528 32.5425 111.12 31.275 107 30.5C97.2094 28.6585 85.7744 44.6504 85.7744 44.6504M116.5 35.5C108.69 41.7484 106 47.5 99 53.5M116.5 35.5L123.5 31.5M99 53.5C93.5 56 88.1432 59.4317 84.5 56C81.2533 52.9419 85.7744 44.6504 85.7744 44.6504M99 53.5C101.075 56.0015 100.363 55.1512 103.5 56C110.497 57.8931 120 47.5 120 47.5M120 47.5C120 47.5 122.057 35.7769 130.5 30.5C134.5 28 146.772 27.217 148.5 30.5C149.409 32.2279 148.5 35.5 148.5 35.5M120 47.5C120 47.5 117.977 53.368 120 56C123.162 60.1137 132.5 51.5 132.5 51.5L140.5 43.5M148.5 35.5L177.5 2.50001M148.5 35.5L140.5 43.5M140.5 43.5C140.5 43.5 140.731 49.1405 143 51.5C147.096 55.7602 158 49.5 158 49.5M158 49.5L177.5 25.5M158 49.5C158 49.5 162.285 54.45 166 56C178.377 61.1639 183.717 42.8264 189 30.5C190.5 27 192.766 20.3099 197 22C198.795 22.7167 200.5 25.5 200.5 25.5M177.5 25.5C177.5 25.5 176.248 23.709 176.5 22.5C176.811 21.0071 178.313 19.0426 179.5 20C180.275 20.625 180 22.5 180 22.5C180 22.5 182.714 20.8648 183.5 22C184.203 23.0154 183.342 24.0965 182.5 25C181.162 26.4356 177.5 25.5 177.5 25.5ZM200.5 25.5L183 51.5M200.5 25.5C200.5 25.5 210.646 20.6062 216.5 23C227.689 27.5759 200.5 49.5 200.5 49.5C200.5 49.5 205.592 51.6199 209 51.5C217.831 51.1894 224 34.5 224 34.5M224 34.5C227 27 233.51 20.0498 242.5 20.5C245.769 20.6637 248 21.5 250.5 23C253 24.5 238 43.5 238 43.5M224 34.5C221.306 36.8483 222.306 42.3021 225 44.6504C227.671 46.9789 238 43.5 238 43.5M238 43.5C238 43.5 216.5 76 209 81.5C202.577 86.2103 192.698 91.5545 189 84.5C186.071 78.9122 188.814 73.6201 192.5 68.5C201.5 56 225.445 58.771 242.5 47.5C253.847 40.0011 269.5 25.5 269.5 25.5"
+            stroke="black"
+            stroke-width="2"
+          />
+        </svg>
+      </div>
+    </div>
+  </body>
+</html>
