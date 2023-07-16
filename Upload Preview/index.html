@@ -5,33 +5,76 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Image Preview</title>
     <style>
-      #previewContainer {
-        position: relative;
-        display: inline-block;
+      /* Styling for the body */
+      body {
+        background: #64b5f6; /* Set the background color of the body to a light blue shade */
+        font-family: "PT Sans", sans-serif; /* Set the font family for the entire document to "PT Sans" or sans-serif as a fallback */
+        margin: 0; /* set default margin */
+        padding: 0; /* set default padding */
+        display: flex; /* Use flexbox to enable flex layout */
+        justify-content: center; /* Horizontally center the content in the body */
+        align-items: center; /* Vertically center the content in the body */
+        height: 100vh; /* Set the height of the body to the full viewport height */
       }
 
+      /* Styling for the container */
+      .container {
+        background: #fff; /* Set the background color of the container to white */
+        padding: 20px; /* Add 20px of padding around the container */
+        width: 50%; /* Set the width of the container to 50% of its parent container */
+        height: 50vh; /* Set the height of the container to 50% of the viewport height */
+        display: flex; /* Use flexbox to enable flex layout for the container */
+        flex-direction: row; /* Display the child elements in a row (side by side) */
+        gap: 20px; /* Add 20px of spacing between the child elements */
+      }
+
+      /* Styling for the image upload input */
+      .ImgUpload {
+        width: 0.1px; /* Set the width of the image upload input to 0.1 pixels */
+        height: 0.1px; /* Set the height of the image upload input to 0.1 pixels */
+        opacity: 0; /* Make the image upload input transparent */
+        overflow: hidden; /* Hide any overflowing content */
+        position: absolute; /* Position the image upload input absolutely within its parent container */
+        z-index: -1; /* Set a negative z-index to place it behind other elements */
+      }
+
+      /* Styling for the label next to the image upload input */
+      .ImgUpload + label {
+        font-size: 16px; /* Set the font size for the label */
+        font-weight: 600; /* Set the font weight for the label */
+        margin-top: 4px; /* Add a margin of 4 pixels on the top of the label */
+        background-color: white; /* Set the background color of the label to white */
+        border: 1px solid #4285f4; /* Add a 1px solid border with a blue color (#4285f4) */
+        border-radius: 2px; /* Add a border radius of 2 pixels to give a slightly rounded appearance */
+        padding: 8px; /* Add 8 pixels of padding around the label */
+        display: inline-block; /* Set the display of the label to inline-block to occupy only the necessary width */
+        cursor: pointer; /* Change the cursor to a pointer when hovering over the label to indicate it's clickable */
+      }
+
+      /* Styling for the preview image */
       #previewImage {
-        max-width: 300px;
-        max-height: 300px;
-        transition: transform 0.3s ease;
-      }
-
-      #previewContainer:hover #previewImage {
-        transform: scale(1.2);
+        width: 350px;
+        height: 350px;
       }
     </style>
   </head>
   <body>
-    <div id="previewContainer">
-      <input type="file" id="imageInput" accept="image/*" />
-      <img
-        id="previewImage"
-        src="#"
-        alt="Preview Image"
-        style="display: none"
-      />
+    <div class="container">
+      <!-- Image upload input and label inside a div with class imageDIV -->
+      <div class="imageDIV">
+        <input type="file" id="ImgUpload" class="ImgUpload" accept="image/*" />
+        <label for="ImgUpload">Choose an Image</label>
+      </div>
+      <!-- Image preview div with class imagePreviewDIV -->
+      <div class="imagePreviewDIV">
+        <img
+          id="previewImage"
+          src="#"
+          alt="Preview Image"
+          style="display: none"
+        />
+      </div>
     </div>
-
     <script>
       // Function to handle the file input change event
       function handleImagePreview(event) {
@@ -51,13 +94,14 @@
           // Read the image file as a URL
           reader.readAsDataURL(file);
         } else {
+          // If no file is selected, reset the preview
           previewImage.src = "#";
           previewImage.style.display = "none";
         }
       }
 
       // Get the image input element
-      var imageInput = document.getElementById("imageInput");
+      var imageInput = document.getElementById("ImgUpload");
 
       // Add event listener for the file input change event
       imageInput.addEventListener("change", handleImagePreview);
