@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Speech to Text Converter</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .container {
+        max-width: 400px;
+        background-color: #fff;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .title {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      #transcript {
+        width: 100%;
+        min-height: 100px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-bottom: 20px;
+      }
+
+      .btn-container {
+        display: flex;
+      }
+
+      button {
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+        margin-right: 10px;
+      }
+
+      select {
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="title">Speech to Text Converter</div>
+      <div id="transcript"></div>
+      <div class="btn-container">
+        <button id="start">Start</button>
+        <button id="stop">Stop</button>
+        <select id="language">
+          <option value="en-US">English</option>
+          <option value="fa-IR">Persian</option>
+          <option value="tr-TR">Turkish</option>
+          <option value="hi-IN">Hindi</option>
+          <option value="ps-AF">Pashto</option>
+        </select>
+      </div>
+    </div>
+
+    <script>
+      if ("webkitSpeechRecognition" in window) {
+        // Create a new instance of SpeechRecognition
+        const recognition = new webkitSpeechRecognition();
+
+        // Set recognition options
+        recognition.continuous = true; // Continuous speech recognition
+        recognition.interimResults = true; // Provide interim results while speaking
+        recognition.lang = "en-US"; // Set the default language to English (United States)
+
+        // Get references to HTML elements
+        const transcriptElement = document.getElementById("transcript"); // The element to display the speech transcript
+        const startButton = document.getElementById("start"); // The button to start speech recognition
+        const stopButton = document.getElementById("stop"); // The button to stop speech recognition
+        const languageSelect = document.getElementById("language"); // The select dropdown for choosing the language
+        let transcript = ""; // Variable to store the speech transcript
+
+        // Event listener for the "Start" button click
+        startButton.addEventListener("click", () => {
+          // Set the language to the selected language from the dropdown
+          recognition.lang = languageSelect.value;
+          // Start speech recognition
+          recognition.start();
+        });
+
+        // Event listener for the "Stop" button click
+        stopButton.addEventListener("click", () => {
+          // Stop speech recognition
+          recognition.stop();
+        });
+
+        // Event listener for the "result" event when speech is recognized
+        recognition.onresult = (event) => {
+          // Process each recognized speech result
+          for (let i = event.resultIndex; i < event.results.length; i++) {
+            // Check if the current result is final (not an interim result)
+            if (event.results[i].isFinal) {
+              // Append the recognized transcript to the overall transcript variable
+              transcript += event.results[i][0].transcript + " ";
+            }
+          }
+          // Update the transcriptElement to display the current transcript
+          transcriptElement.textContent = transcript;
+        };
+      } else {
+        // Display a message in the console if Speech Recognition API is not available
+        console.log("Speech Recognition Not Available");
+      }
+    </script>
+  </body>
+</html>
