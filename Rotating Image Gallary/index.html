@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100vh;
+        justify-content: center;
+        background-color: black;
+        overflow: hidden;
+      }
+
+      .image-container {
+        position: relative;
+        width: 200px;
+        height: 200px;
+        transform-style: preserve-3d;
+        transform: perspective(1000px) rotateY(0deg);
+        transition: transform 0.7s;
+      }
+
+      .image-container span {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        transform: rotateY(calc(var(--i) * 45deg)) translateZ(400px);
+      }
+
+      img {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+      }
+
+      .btn-container {
+        position: relative;
+        width: 80%;
+      }
+
+      .btn {
+        position: absolute;
+        bottom: -80px;
+        background-color: slateblue;
+        color: white;
+        border: none;
+        padding: 10px 2px;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100px;
+      }
+
+      .btn:hover {
+        filter: brightness(1.5);
+      }
+
+      #prev {
+        left: 20%;
+      }
+
+      #next {
+        right: 20%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="image-container">
+      <span style="--i: 1">
+        <img
+          src="https://images.unsplash.com/photo-1661956601349-f61c959a8fd4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=871&q=80"
+        />
+      </span>
+
+      <span style="--i: 2">
+        <img
+          src="https://images.unsplash.com/photo-1661956600684-97d3a4320e45?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80"
+        />
+      </span>
+      <span style="--i: 3">
+        <img
+          src="https://images.unsplash.com/photo-1661956601031-4cf09efadfce?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=876&q=80"
+        />
+      </span>
+      <span style="--i: 4">
+        <img
+          src="https://plus.unsplash.com/premium_photo-1661611049798-865609d8652e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80"
+        />
+      </span>
+      <span style="--i: 5">
+        <img
+          src="https://plus.unsplash.com/premium_photo-1661611049798-865609d8652e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80"
+        />
+      </span>
+      <span style="--i: 6">
+        <img
+          src="https://plus.unsplash.com/premium_photo-1661611049798-865609d8652e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80"
+        />
+      </span>
+      <span style="--i: 7">
+        <img
+          src="https://plus.unsplash.com/premium_photo-1661611049798-865609d8652e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80"
+        />
+      </span>
+      <span style="--i: 8">
+        <img
+          src="https://plus.unsplash.com/premium_photo-1661611049798-865609d8652e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80"
+        />
+      </span>
+    </div>
+    <div class="btn-container">
+      <button class="btn" id="prev">Prev</button>
+      <button class="btn" id="next">Next</button>
+    </div>
+
+    <script>
+      const imageContainerEl = document.querySelector(".image-container");
+      const prevEl = document.getElementById("prev");
+      const nextEl = document.getElementById("next");
+
+      let x = 0;
+      let timer;
+      prevEl.addEventListener("click", () => {
+        x = x + 45;
+        clearTimeout(timer);
+        updateGallery();
+      });
+
+      nextEl.addEventListener("click", () => {
+        x = x - 45;
+        clearTimeout(timer);
+        updateGallery();
+      });
+
+      function updateGallery() {
+        imageContainerEl.style.transform = `perspective(1000px) rotateY(${x}deg)`;
+
+        timer = setTimeout(() => {
+          x = x - 45;
+          updateGallery();
+        }, 3000);
+      }
+
+      updateGallery();
+    </script>
+  </body>
+</html>

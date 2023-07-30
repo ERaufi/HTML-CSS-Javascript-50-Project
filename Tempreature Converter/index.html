@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Temperature Converter</title>
+    <style>
+      body {
+        background-color: #ececec;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        font-family: Arial, sans-serif;
+      }
+
+      .container {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      .converter {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .converter input {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-right: 10px;
+        width: 100px;
+      }
+
+      .converter select {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      .converter button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .result {
+        text-align: center;
+        font-size: 24px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Temperature Converter</h1>
+      <div class="converter">
+        <input
+          type="number"
+          id="inputTemperature"
+          placeholder="Enter temperature"
+        />
+        <select id="unitSelect">
+          <option value="celsius">Celsius</option>
+          <option value="fahrenheit">Fahrenheit</option>
+        </select>
+        <button onclick="convertTemperature()">Convert</button>
+      </div>
+      <div class="result">
+        <p id="resultTemperature"></p>
+      </div>
+    </div>
+  <script>
+    // Function to convert the input temperature between Celsius and Fahrenheit
+    function convertTemperature() {
+      // Get input temperature and unit selection from the HTML elements
+      const inputTemperature = parseFloat(document.getElementById("inputTemperature").value);
+      const unitSelect = document.getElementById("unitSelect").value;
+      const resultTemperatureElement = document.getElementById("resultTemperature");
+
+      if (unitSelect === "celsius") {
+        // Convert Celsius to Fahrenheit
+        const fahrenheit = (inputTemperature * 9) / 5 + 32;
+        resultTemperatureElement.textContent = `${fahrenheit.toFixed(2)} °F`;
+        // Set background color based on the converted Fahrenheit temperature
+        document.body.style.backgroundColor = getBackgroundColor(fahrenheit);
+      } else if (unitSelect === "fahrenheit") {
+        // Convert Fahrenheit to Celsius
+        const celsius = ((inputTemperature - 32) * 5) / 9;
+        resultTemperatureElement.textContent = `${celsius.toFixed(2)} °C`;
+        // Set background color based on the converted Celsius temperature
+        document.body.style.backgroundColor = getBackgroundColor(celsius);
+      }
+    }
+
+    // Function to determine the background color based on the temperature
+    function getBackgroundColor(temperature) {
+      if (temperature <= 0) {
+        return "#0099ff"; // Blue for cold temperatures
+      } else if (temperature <= 20) {
+        return "#66ccff"; // Light blue for cool temperatures
+      } else if (temperature <= 30) {
+        return "#ff9933"; // Orange for warm temperatures
+      } else {
+        return "#ff3300"; // Red for hot temperatures
+      }
+    }
+  </script>
+  </body>
+</html>
