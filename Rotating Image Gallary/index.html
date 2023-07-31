@@ -12,7 +12,6 @@
         align-items: center;
         height: 100vh;
         justify-content: center;
-        background-color: black;
         overflow: hidden;
       }
 
@@ -38,35 +37,6 @@
         left: 0;
         top: 0;
         width: 100%;
-      }
-
-      .btn-container {
-        position: relative;
-        width: 80%;
-      }
-
-      .btn {
-        position: absolute;
-        bottom: -80px;
-        background-color: slateblue;
-        color: white;
-        border: none;
-        padding: 10px 2px;
-        border-radius: 5px;
-        cursor: pointer;
-        width: 100px;
-      }
-
-      .btn:hover {
-        filter: brightness(1.5);
-      }
-
-      #prev {
-        left: 20%;
-      }
-
-      #next {
-        right: 20%;
       }
     </style>
   </head>
@@ -114,40 +84,23 @@
         />
       </span>
     </div>
-    <div class="btn-container">
-      <button class="btn" id="prev">Prev</button>
-      <button class="btn" id="next">Next</button>
-    </div>
 
     <script>
       const imageContainerEl = document.querySelector(".image-container");
-      const prevEl = document.getElementById("prev");
-      const nextEl = document.getElementById("next");
 
       let x = 0;
       let timer;
-      prevEl.addEventListener("click", () => {
-        x = x + 45;
-        clearTimeout(timer);
-        updateGallery();
-      });
 
-      nextEl.addEventListener("click", () => {
-        x = x - 45;
-        clearTimeout(timer);
-        updateGallery();
-      });
-
-      function updateGallery() {
+      function init() {
         imageContainerEl.style.transform = `perspective(1000px) rotateY(${x}deg)`;
 
         timer = setTimeout(() => {
           x = x - 45;
-          updateGallery();
+          init();
         }, 3000);
       }
 
-      updateGallery();
+      init();
     </script>
   </body>
 </html>
